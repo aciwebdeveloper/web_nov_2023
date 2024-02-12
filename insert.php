@@ -1,22 +1,49 @@
 <?php
-
+session_start();
 include 'db_connection.php';
 
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $s_name = $_POST['name'];
-    $f_name = $_POST['f-name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $dob = $_POST['dob'];
-    $gender = $_POST['gender'];
+    if (isset($_POST['login_button']))
+    {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $fetch_query = "SELECT * FROM users WHERE email = '$email' and password = '$password' ";
+        $result = $connection->query($fetch_query);
 
-    $sql = "INSERT INTO `users` (`name`, `f_name`, `email`, `password`, `dob`, `gender`) VALUES ('$s_name', '$f_name', '$email', '$password', '$dob', '$gender')";
-    $connection->query($sql);
+        if ($result->num_rows > 0)
+        {
+            $row = $result->fetch_assoc();
+            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['email'] = $row['email'];
 
-    header('location: mySqlPHP.php');
+            header('location: ./mySqlPHP.php');
+        }
+        else
+        {
+            $_SESSION['error'] = 'Your Email or Password Invalid!!';
+            header('location: hospital');
+        }
+
+    }
+    else
+    {
+        $s_name = $_POST['name'];
+        $f_name = $_POST['f-name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $dob = $_POST['dob'];
+        $gender = $_POST['gender'];
+
+        $sql = "INSERT INTO `users` (`name`, `f_name`, `email`, `password`, `dob`, `gender`) VALUES ('$s_name', '$f_name', '$email', '$password', '$dob', '$gender')";
+        $connection->query($sql);
+
+        header('location: hospital');
+
+    }
+
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET")
