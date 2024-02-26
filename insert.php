@@ -55,3 +55,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET")
     header('location: mySqlPHP.php');
 
 }
+
+class abc{
+    function __construct(){
+
+    }
+}
+
+$abc= new abc();
