@@ -1,10 +1,10 @@
 <?php
-session_start();
-session_destroy();
-if (!isset($_SESSION['user_id']))
-{
-    header('location: hospital');
-}
+//session_start();
+//session_destroy();
+//if (!isset($_SESSION['user_id']))
+//{
+//    header('location: hospital');
+//}
 ?>
 
 <!DOCTYPE html>

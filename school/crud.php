@@ -35,14 +35,32 @@ class School
 
     public function create($data, $table_name)
     {
+        $keys = array_keys($data);
+        $keys = implode("`, `", $keys);
+        $keys =  '`'.$keys.'`';
+
+        $values = array_values($data);
+        $values = implode("', '", $values);
+        $values =  "'".$values."'";
+
         $school_name = $data['school_name'];
         $registration_no = $data['registration_no'];
         $sector = $data['sector'];
         $type = $data['type'];
         $address = $data['address'];
-        $sql = "INSERT INTO `$table_name` (`school_name`, `registration_no`, `sector`, `type`, `address`) VALUES ('$school_name', '$registration_no', '$sector', '$type', '$address')";
+        $sql = "INSERT INTO `$table_name` ($keys) VALUES ($values)";
+//        $sql = "INSERT INTO `$table_name` (`school_name`, `registration_no`, `sector`, `type`, `address`) VALUES ('$school_name', '$registration_no', '$sector', '$type', '$address')";
+
         $this->db->query($sql);
         header('location: ./index.php');
+    }
+
+    public function read($table = null)
+    {
+        $sql = "SELECT * From `$table` ";
+        $result = mysqli_query($this->db, $sql);
+
+        return $result;
     }
 
 }
@@ -62,5 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'address' => $_POST['address'],
         );
         $school->create($data, 'schools');
+
+        header('location: list.php');
     }
 }
