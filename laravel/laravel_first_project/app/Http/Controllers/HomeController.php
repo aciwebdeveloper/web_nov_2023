@@ -2,18 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employees;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $array = array(
-          'id' => 1,
-          'name' => 'Imran khan',
-          'class' => 'Five',
-          'phoneno' => 03030336465,
-        );
+        $array = Employees::where('id', 1)->get();
+
         return view('home', compact('array'));
+    }
+
+    public function services()
+    {
+        return view('services');
+    }
+    public function addServices(Request $request)
+    {
+        $data = $request->all();
+        echo '<pre>';
+        print_r($data);
+
     }
 }

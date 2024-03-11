@@ -14,3 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[\App\Http\Controllers\HomeController::class, 'index']);
+
+Route::get('/services',[\App\Http\Controllers\HomeController::class,
+    'services'])->name('services-list');
+
+Route::post('/services-add',[\App\Http\Controllers\HomeController::class,
+    'addServices'])->name('services-add');
+
+
+
+

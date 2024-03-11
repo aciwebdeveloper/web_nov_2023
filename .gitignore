@@ -1,1 +1,4 @@
 uploads/
+
+laravel/laravel_first_project/vendor/*
+laravel/laravel_first_project/storage/*
