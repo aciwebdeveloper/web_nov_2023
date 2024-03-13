@@ -13,7 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $array = Product::all();
+        $array = Product::with('user')->paginate(5);
         return view('products.index', compact('array'));
     }
 
@@ -30,21 +30,42 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'product_name' => 'required'
+            ]);
 
         $user_id =  Auth::id();
         $data = $request->all();
-        $obj = new Product();
-        $obj->user_id  = $user_id;
-        $obj->name  = $data['product_name'];
-        $obj->type  = $data['type'];
-        $obj->description  = $data['description'];
-        $obj->qty  = $data['qty'];
-        $obj->price  = $data['price'];
-        $obj->save();
+
+        $imageName = time().'.'.$request->image->extension();
+       $request->image->move(public_path('uploads'), $imageName);
 
 
-        return redirect()->route('products');
+//        echo '<pre>';
+//        print_r($data);
+//        $obj = new Product();
+//        $obj->user_id  = $user_id;
+//        $obj->name  = $data['product_name'];
+//        $obj->type  = $data['type'];
+//        $obj->description  = $data['description'];
+//        $obj->qty  = $data['qty'];
+//        $obj->price  = $data['price'];
+//        $obj->save();
+
+        //Mass Assignments
+
+         Product::create([
+           'user_id' =>  Auth::id(),
+           'name' => $data['product_name'],
+           'type' => $data['type'],
+           'description' => $data['description'],
+           'qty' => $data['qty'],
+           'price' => $data['price'],
+           'image' => $imageName
+         ]);
+
+         return redirect()->route('products');
 
 
     }

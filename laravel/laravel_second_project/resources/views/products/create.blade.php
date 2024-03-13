@@ -9,9 +9,6 @@
                     <div class="card-header">Add Product</div>
                     <div class="card-body">
                         <form id="student_form" enctype="multipart/form-data" action="{{ route('products-save') }}" method="post">
-                            @php
-                            print_r($obj);
-                         @endphp
                             @csrf
                             <div class="form-group text-left p-3">
                                 <label for="email">Product Name:</label>
@@ -38,7 +35,24 @@
                             <div class="form-group text-left p-3">
                                 <label for="pwd">Description:</label>
                                 <textarea class="form-control" name="description"></textarea>
+                                <p class="font-weight-bold">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    @endif
+                                </p>
                             </div>
+
+                            <div class="form-group text-left p-3">
+                                <label for="pwd">Upload Image:</label>
+                                <input type="file" class="form-control" name="image"></input>
+                            </div>
+
                             <button type="submit" name="school_form" class="btn btn-primary text-center" style="float: right">Submit</button>
                         </form>
 

@@ -2,3 +2,10 @@ uploads/
 
 laravel/laravel_first_project/vendor/*
 laravel/laravel_first_project/storage/*
+
+laravel/laravel_with_bareez/vendor/*
+laravel/laravel_with_bareez/storage/*
+
+laravel/laravel_second_project/vendor/*
+laravel/laravel_second_project/storage/*
+laravel/laravel_second_project/public/uploads/*
